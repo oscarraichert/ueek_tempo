@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ueek_tempo/services/geolocation.service.dart';
 
-class ForecastScreen extends StatelessWidget {
+class ForecastScreen extends StatefulWidget {
   const ForecastScreen({super.key});
 
   @override
+  State<ForecastScreen> createState() => _ForecastScreenState();
+}
+
+class _ForecastScreenState extends State<ForecastScreen> {
+  late String geoData;
+
+  @override
   Widget build(BuildContext context) {
-
-    GeolocationService.getCurrentLocation();
-
     return Scaffold(
       body: Container(
         margin: EdgeInsets.zero,
@@ -88,9 +92,50 @@ class ForecastScreen extends StatelessWidget {
                                         children: [
                                           Image.asset('assets/images/location_marker.png'),
                                           const SizedBox(width: 5),
-                                          const Text(
-                                            'Lages,SC',
-                                            style: TextStyle(fontSize: 10),
+                                          FutureBuilder(
+                                            future: GeolocationService.getCurrentLocation(),
+                                            builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+                                              if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
+                                                return Text(
+                                                  '${snapshot.data}',
+                                                  style: const TextStyle(fontSize: 10),
+                                                );
+                                              }
+                                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                                return const Text(
+                                                  'Carregando...',
+                                                  style: TextStyle(fontSize: 10),
+                                                );
+                                              } else {
+                                                WidgetsBinding.instance.addPostFrameCallback(
+                                                  (Duration duration) => showDialog(
+                                                    context: context,
+                                                    builder: (context) => AlertDialog(
+                                                      title: const Text('Erro'),
+                                                      content: Text('${snapshot.error}'),
+                                                      titleTextStyle: const TextStyle(color: Colors.black, fontSize: 20),
+                                                      contentTextStyle: const TextStyle(color: Colors.black, fontSize: 14),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                          child: const Text(
+                                                            'OK!',
+                                                            style: TextStyle(fontSize: 16),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+
+                                                return const Text(
+                                                  'Localização',
+                                                  style: TextStyle(fontSize: 10),
+                                                );
+                                              }
+                                            },
                                           ),
                                         ],
                                       ),
@@ -129,7 +174,7 @@ class ForecastScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                     child: ElevatedButton(
-                      onPressed: () => {},
+                      onPressed: () => setState(() {}),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         backgroundColor: const Color.fromRGBO(0, 178, 255, 1),
