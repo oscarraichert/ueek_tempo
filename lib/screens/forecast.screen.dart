@@ -10,8 +10,6 @@ class ForecastScreen extends StatefulWidget {
 }
 
 class _ForecastScreenState extends State<ForecastScreen> {
-  late String geoData;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +119,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
                                                             Navigator.of(context).pop();
                                                           },
                                                           child: const Text(
-                                                            'OK!',
+                                                            'OK',
                                                             style: TextStyle(fontSize: 16),
                                                           ),
                                                         ),
@@ -131,7 +129,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
                                                 );
 
                                                 return const Text(
-                                                  'Localização',
+                                                  'Indisponível',
                                                   style: TextStyle(fontSize: 10),
                                                 );
                                               }
@@ -174,7 +172,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                     child: ElevatedButton(
-                      onPressed: () => setState(() {}),
+                      onPressed: () => setState(() => ()),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         backgroundColor: const Color.fromRGBO(0, 178, 255, 1),

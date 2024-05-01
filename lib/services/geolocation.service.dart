@@ -14,12 +14,12 @@ class GeolocationService {
     if (locationPermission == LocationPermission.denied) {
       locationPermission = await Geolocator.requestPermission();
       if (locationPermission == LocationPermission.denied) {
-        return Future.error('Permitir que o aplicativo acesse a localização do dispositivo.');
+        return Future.error('Permita que o aplicativo acesse a localização do dispositivo.');
       }
     }
 
     if (locationPermission == LocationPermission.deniedForever) {
-      return Future.error('Permissão de acesso a localização permanentemente negada, não podemos pedir permissão.');
+      return Future.error('Permissão de acesso a localização permanentemente negada, habilitar nas configurações.');
     }
 
     var currentPosition = await Geolocator.getCurrentPosition();
