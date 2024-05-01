@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ueek_tempo/services/geolocation.service.dart';
 
 class ForecastScreen extends StatelessWidget {
   const ForecastScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    GeolocationService.getCurrentLocation();
+
     return Scaffold(
       body: Container(
         margin: EdgeInsets.zero,
@@ -21,7 +25,7 @@ class ForecastScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 45, 30, 0),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 45),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
