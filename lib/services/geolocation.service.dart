@@ -1,8 +1,9 @@
 import 'package:geocode/geocode.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:ueek_tempo/models/location.model.dart';
 
 class GeolocationService {
-  static Future<String?> getCurrentLocation() async {
+  static Future<LocationModel> getCurrentLocation() async {
     LocationPermission locationPermission;
 
     var locationServiceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -25,6 +26,8 @@ class GeolocationService {
     var currentPosition = await Geolocator.getCurrentPosition();
     var geoPosition = await GeoCode().reverseGeocoding(latitude: currentPosition.latitude, longitude: currentPosition.longitude);
 
-    return geoPosition.region;
+    var location = LocationModel(region: geoPosition.region, latitude: currentPosition.latitude, longitude: currentPosition.longitude);
+
+    return location;
   }
 }

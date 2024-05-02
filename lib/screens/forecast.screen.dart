@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ueek_tempo/models/forecast.model.dart';
+import 'package:ueek_tempo/models/location.model.dart';
+import 'package:ueek_tempo/services/forecast.service.dart';
 import 'package:ueek_tempo/services/geolocation.service.dart';
 
 class ForecastScreen extends StatefulWidget {
@@ -10,6 +13,14 @@ class ForecastScreen extends StatefulWidget {
 }
 
 class _ForecastScreenState extends State<ForecastScreen> {
+  var geolocationFuture = GeolocationService.getCurrentLocation();
+
+  @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+    geolocationFuture = GeolocationService.getCurrentLocation();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,19 +66,37 @@ class _ForecastScreenState extends State<ForecastScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Column(
+                                      Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            '28°C',
-                                            style: TextStyle(
-                                              fontFamily: 'Sarabun',
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 22,
-                                              color: Color.fromRGBO(0, 178, 255, 1),
-                                            ),
+                                          FutureBuilder(
+                                            future: geolocationFuture.then((location) => ForecastService.getCurrentForecast(location)),
+                                            builder: (BuildContext context, AsyncSnapshot<ForecastModel> snapshot) {
+                                              var tempStyle = const TextStyle(
+                                                fontFamily: 'Sarabun',
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 22,
+                                                color: Color.fromRGBO(0, 178, 255, 1),
+                                              );
+                                              if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+                                                return Text(
+                                                  '${snapshot.data!.temperature.round()}${snapshot.data!.tempUnit}',
+                                                  style: tempStyle,
+                                                );
+                                              }
+                                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                                return Text(
+                                                  '...',
+                                                  style: tempStyle,
+                                                );
+                                              }
+                                              return Text(
+                                                'Indisponível',
+                                                style: tempStyle,
+                                              );
+                                            },
                                           ),
-                                          Text(
+                                          const Text(
                                             'Chuvoso',
                                             style: TextStyle(fontSize: 10),
                                           ),
@@ -91,11 +120,11 @@ class _ForecastScreenState extends State<ForecastScreen> {
                                           Image.asset('assets/images/location_marker.png'),
                                           const SizedBox(width: 5),
                                           FutureBuilder(
-                                            future: GeolocationService.getCurrentLocation(),
-                                            builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-                                              if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
+                                            future: geolocationFuture,
+                                            builder: (BuildContext context, AsyncSnapshot<LocationModel> snapshot) {
+                                              if (snapshot.connectionState == ConnectionState.done && snapshot.data?.region != null) {
                                                 return Text(
-                                                  '${snapshot.data}',
+                                                  '${snapshot.data!.region}',
                                                   style: const TextStyle(fontSize: 10),
                                                 );
                                               }
@@ -104,35 +133,34 @@ class _ForecastScreenState extends State<ForecastScreen> {
                                                   'Carregando...',
                                                   style: TextStyle(fontSize: 10),
                                                 );
-                                              } else {
-                                                WidgetsBinding.instance.addPostFrameCallback(
-                                                  (Duration duration) => showDialog(
-                                                    context: context,
-                                                    builder: (context) => AlertDialog(
-                                                      title: const Text('Erro'),
-                                                      content: Text('${snapshot.error}'),
-                                                      titleTextStyle: const TextStyle(color: Colors.black, fontSize: 20),
-                                                      contentTextStyle: const TextStyle(color: Colors.black, fontSize: 14),
-                                                      actions: [
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                          child: const Text(
-                                                            'OK',
-                                                            style: TextStyle(fontSize: 16),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-
-                                                return const Text(
-                                                  'Indisponível',
-                                                  style: TextStyle(fontSize: 10),
-                                                );
                                               }
+                                              WidgetsBinding.instance.addPostFrameCallback(
+                                                (Duration duration) => showDialog(
+                                                  context: context,
+                                                  builder: (context) => AlertDialog(
+                                                    title: const Text('Erro'),
+                                                    content: Text('${snapshot.error}'),
+                                                    titleTextStyle: const TextStyle(color: Colors.black, fontSize: 20),
+                                                    contentTextStyle: const TextStyle(color: Colors.black, fontSize: 14),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: const Text(
+                                                          'OK',
+                                                          style: TextStyle(fontSize: 16),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+
+                                              return const Text(
+                                                'Indisponível',
+                                                style: TextStyle(fontSize: 10),
+                                              );
                                             },
                                           ),
                                         ],
