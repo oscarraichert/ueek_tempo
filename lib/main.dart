@@ -18,9 +18,8 @@ class MainApp extends StatelessWidget {
           color: Color.fromRGBO(41, 44, 53, 1),
         ),
         textTheme: Theme.of(context).textTheme.apply(
-          bodyColor: const Color.fromRGBO(175, 175, 176, 1),
-          displayColor: const Color.fromRGBO(175, 175, 176, 1),
           fontFamily: 'Mukta',
+          bodyColor: const Color.fromRGBO(175, 175, 176, 1),
         ),
       ),
     );
