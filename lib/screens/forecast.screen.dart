@@ -221,18 +221,18 @@ class _ForecastScreenState extends State<ForecastScreen> {
         if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
           return Text(
             '${snapshot.data!.temperature.round()}${snapshot.data!.tempUnit}',
-            style: STYLES.tempStyle,
+            style: STYLES.temperatureStyle,
           );
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text(
             '...',
-            style: STYLES.tempStyle,
+            style: STYLES.temperatureStyle,
           );
         }
         return const Text(
           'Indisponível',
-          style: STYLES.tempStyle,
+          style: STYLES.temperatureStyle,
         );
       },
     );

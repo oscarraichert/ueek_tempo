@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 abstract class STYLES {
-  static const tempStyle = TextStyle(
+  static const temperatureStyle = TextStyle(
     fontFamily: 'Sarabun',
     fontWeight: FontWeight.w600,
     fontSize: 22,
