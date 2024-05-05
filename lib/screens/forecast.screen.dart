@@ -15,6 +15,7 @@ class ForecastScreen extends StatefulWidget {
 
 class _ForecastScreenState extends State<ForecastScreen> {
   var geolocationFuture = GeolocationService.getCurrentLocation();
+  int weatherCode = 100;
 
   @override
   void setState(VoidCallback fn) {
@@ -80,6 +81,8 @@ class _ForecastScreenState extends State<ForecastScreen> {
                                                 color: Color.fromRGBO(0, 178, 255, 1),
                                               );
                                               if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+                                                weatherCode = snapshot.data!.weatherCode;
+
                                                 return Text(
                                                   '${snapshot.data!.temperature.round()}${snapshot.data!.tempUnit}',
                                                   style: tempStyle,
@@ -97,14 +100,14 @@ class _ForecastScreenState extends State<ForecastScreen> {
                                               );
                                             },
                                           ),
-                                          const Text(
-                                            'Chuvoso',
-                                            style: TextStyle(fontSize: 10),
+                                          Text(
+                                            ForecastService.weathers.entries.firstWhere((element) => element.key.contains(weatherCode)).value.$1,
+                                            style: const TextStyle(fontSize: 10),
                                           ),
                                         ],
                                       ),
                                       SvgPicture.asset(
-                                        'assets/images/icon_rainy.svg',
+                                        ForecastService.weathers.entries.firstWhere((element) => element.key.contains(weatherCode)).value.$2,
                                         width: 24,
                                       ),
                                     ],

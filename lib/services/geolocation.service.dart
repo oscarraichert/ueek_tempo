@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:geocode/geocode.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GeolocationService {
   static Future<Position> getCurrentLocation() async {
     LocationPermission locationPermission;
+
+    log('getCurrentLocation');
 
     var locationServiceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!locationServiceEnabled) {
@@ -26,6 +30,9 @@ class GeolocationService {
   }
 
   static Future<String?> getReverseGeocode(Position currentPosition) async {
+
+    log('getReverseGeocode');
+
     var geoPosition = await GeoCode().reverseGeocoding(latitude: currentPosition.latitude, longitude: currentPosition.longitude);
     return geoPosition.region;
   }
