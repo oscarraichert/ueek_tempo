@@ -182,7 +182,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
 
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text(
-            '...',
+            '-',
             style: TextStyle(fontSize: 22),
           );
         }
@@ -204,7 +204,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
 
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text(
-            '...',
+            '-',
             style: TextStyle(fontSize: 10),
           );
         }
