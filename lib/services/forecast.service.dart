@@ -23,7 +23,7 @@ class ForecastService {
       71 || 73 || 75 || 77 || 85 || 86 => ('Neve', ASSETS.iconSnowy),
       80 || 81 || 82 => ('Aguaceiro', ASSETS.iconRainy),
       95 || 96 || 99 => ('Tempestade', ASSETS.iconThunderstorms),
-      _ => ('INVÁLIDO???', ASSETS.iconSunny)
+      _ => ('Indisponível', ASSETS.iconSunny)
     };
   }
 }
