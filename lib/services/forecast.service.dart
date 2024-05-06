@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:http/http.dart' as http;
 import 'package:ueek_tempo/models/forecast.model.dart';
 import 'package:ueek_tempo/utils/assets.dart';
@@ -10,8 +8,6 @@ class ForecastService {
 
   static Future<ForecastModel> getCurrentForecast(double latitude, double longitude) async {
     var response = await http.get(Uri.parse('${apiUri}forecast?current=temperature_2m,weather_code&latitude=$latitude&longitude=$longitude&timezone=auto'));
-
-    log('getCurrentForecast');
 
     return ForecastModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   }
