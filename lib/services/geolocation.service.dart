@@ -22,7 +22,7 @@ class GeolocationService {
       return Future.error('Permissão de acesso a localização permanentemente negada, habilitar nas configurações.');
     }
 
-    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
+    return await Geolocator.getCurrentPosition();
   }
 
   static Future<String?> getReverseGeocode(Position currentPosition) async {

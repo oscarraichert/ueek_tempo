@@ -92,7 +92,9 @@ class _ForecastScreenState extends State<ForecastScreen> {
                                     children: [
                                       Row(
                                         children: [
-                                          Image.asset(ASSETS.locationMarker),
+                                          SvgPicture.asset(
+                                            ASSETS.locationMarker,
+                                          ),
                                           const SizedBox(width: 5),
                                           getLocation(),
                                         ],

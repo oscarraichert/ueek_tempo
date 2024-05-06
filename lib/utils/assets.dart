@@ -1,7 +1,7 @@
 abstract class ASSETS {
   static const forecastBackgroundImg = 'assets/images/background_img.png';
   static const ueekLogo = 'assets/images/ueek_logo.svg';
-  static const locationMarker = 'assets/images/location_marker.png';
+  static const locationMarker = 'assets/images/location_marker.svg';
   static const iconCloudy = 'assets/images/icon_cloudy.svg';
   static const iconDrizzle = 'assets/images/icon_drizzle.svg';
   static const iconFoggy = 'assets/images/icon_foggy.svg';
