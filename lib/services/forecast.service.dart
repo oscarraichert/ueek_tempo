@@ -12,15 +12,18 @@ class ForecastService {
     return ForecastModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   }
 
-  static const weathers = <List<int>, (String, String)>{
-    [0, 1]: ('Céu Limpo', ASSETS.iconSunny),
-    [2]: ('Parcialmente Nublado', ASSETS.iconPartlyCloudy),
-    [3]: ('Nublado', ASSETS.iconCloudy),
-    [45, 48]: ('Nevoeiro', ASSETS.iconFoggy),
-    [51, 53, 55, 56, 57]: ('Chuvisco', ASSETS.iconDrizzle),
-    [61, 63, 65, 66, 67]: ('Chuvoso', ASSETS.iconRainy),
-    [71, 73, 75, 77, 85, 86]: ('Neve', ASSETS.iconSnowy),
-    [80, 81, 82]: ('Aguaceiro', ASSETS.iconRainy),
-    [95, 96, 99]: ('Tempestade', ASSETS.iconThunderstorms),
-  };
+  static (String, String) getWeatherCondition(int weatherCode) {
+    return switch (weatherCode) {
+      0 || 1 => ('Céu Limpo', ASSETS.iconSunny),
+      2 => ('Parcialmente Nublado', ASSETS.iconPartlyCloudy),
+      3 => ('Nublado', ASSETS.iconCloudy),
+      45 || 48 => ('Nevoeiro', ASSETS.iconFoggy),
+      51 || 53 || 55 || 56 || 57 => ('Chuvisco', ASSETS.iconDrizzle),
+      61 || 63 || 65 || 66 || 67 => ('Chuvoso', ASSETS.iconRainy),
+      71 || 73 || 75 || 77 || 85 || 86 => ('Neve', ASSETS.iconSnowy),
+      80 || 81 || 82 => ('Aguaceiro', ASSETS.iconRainy),
+      95 || 96 || 99 => ('Tempestade', ASSETS.iconThunderstorms),
+      _ => ('INVÁLIDO???', ASSETS.iconSunny)
+    };
+  }
 }

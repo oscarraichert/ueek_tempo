@@ -175,16 +175,13 @@ class _ForecastScreenState extends State<ForecastScreen> {
       builder: (context) {
         if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
           return SvgPicture.asset(
-            ForecastService.weathers.entries.firstWhere((element) => element.key.contains(snapshot.data!.weatherCode)).value.$2,
+            ForecastService.getWeatherCondition(snapshot.data!.weatherCode).$2,
             width: 24,
           );
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text(
-            '-',
-            style: TextStyle(fontSize: 22),
-          );
+          return const Text('');
         }
 
         return const Text('');
@@ -197,7 +194,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
       builder: (context) {
         if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
           return Text(
-            ForecastService.weathers.entries.firstWhere((element) => element.key.contains(snapshot.data!.weatherCode)).value.$1,
+            ForecastService.getWeatherCondition(snapshot.data!.weatherCode).$1,
             style: const TextStyle(fontSize: 10),
           );
         }
