@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
   flutter_svg: ^2.0.10+1
-  geocode: ^1.0.3
+  geocoding: ^3.0.0
   geolocator: ^11.0.0
   http: ^1.2.1
 

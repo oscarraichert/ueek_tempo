@@ -1,4 +1,4 @@
-import 'package:geocode/geocode.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GeolocationService {
@@ -26,7 +26,7 @@ class GeolocationService {
   }
 
   static Future<String?> getReverseGeocode(Position currentPosition) async {
-    var geoPosition = await GeoCode().reverseGeocoding(latitude: currentPosition.latitude, longitude: currentPosition.longitude);
-    return geoPosition.region;
+    var geoPosition = await placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
+    return '${geoPosition.first.subAdministrativeArea}, ${geoPosition.first.administrativeArea}';
   }
 }
