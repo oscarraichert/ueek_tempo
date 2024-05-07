@@ -27,6 +27,6 @@ class GeolocationService {
 
   static Future<String?> getReverseGeocode(Position currentPosition) async {
     var geoPosition = await placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
-    return '${geoPosition.first.subAdministrativeArea}, ${geoPosition.first.administrativeArea}';
+    return '${geoPosition.first.locality ?? geoPosition.first.subAdministrativeArea}, ${geoPosition.first.administrativeArea}';
   }
 }
